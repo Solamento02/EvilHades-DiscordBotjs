@@ -26,7 +26,7 @@ console.log(client.commands);
 
 client.on('ready', () => {
     console.log(`Bot iniciado com sucesso! Presente em ${client.users.cache.size} usuários!, em ${client.guilds.cache.size} servidores!`);
-    client.user.setActivity(`Rawwr!! Tradução: ${client.guilds.cache.size} SERVIDORES QUE ESTOY`);
+    client.user.setActivity(`Rawwr!! Translate ${client.guilds.cache.size} SERVERS THAT I AM`);
 });
 
 client.on('ready', () => {
@@ -48,15 +48,15 @@ client.on('messageCreate', async (msg) => {
 const player = new Player(client);
 
 player.on('error', (queue, error) => {
-    console.log(`[${queue.guild.name}] Erro na fila😳 ${error.message}`);
+    console.log(`[${queue.guild.name}] Error on queue😳 ${error.message}`);
   });
   
 player.on('connectionError', (queue, error) => {
-    console.log(`[${queue.guild.name}] Erro na conexão😳 ${error.message}`);
+    console.log(`[${queue.guild.name}] Error on queue😳 ${error.message}`);
   });
   
 player.on('trackStart', (queue, track) => {
-    queue.metadata.send(`▶ | Começou a tocar RaAWR **${track.title}** 🎶 **${queue.connection.channel.name}**!`);
+    queue.metadata.send(`▶ | Started to play **${track.title}** 🎶 **${queue.connection.channel.name}**!`);
   });
   
 player.on('botDisconnect', queue => {
@@ -71,7 +71,7 @@ client.on('messageCreate', async (msg) => {
             msg.reply('Deployed!');
         })
         .catch(err => {
-            msg.reply('Não deu deploy :/ !');
+            msg.reply('Not deploy! :/ ');
             console.error(err)
         });
     }

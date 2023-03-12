@@ -25,7 +25,7 @@ for (const file of commandFiles) {
 console.log(client.commands);
 
 client.on('ready', () => {
-    console.log(`Bot iniciado com sucesso! Presente em ${client.users.cache.size} usuários!, em ${client.guilds.cache.size} servidores!`);
+    console.log(`Bot online! ${client.users.cache.size} users!, in  ${client.guilds.cache.size} servers!`);
     client.user.setActivity(`Rawwr!! Translate ${client.guilds.cache.size} SERVERS THAT I AM`);
 });
 

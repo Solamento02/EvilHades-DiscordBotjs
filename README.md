@@ -1,5 +1,5 @@
 # EvilHades-DiscordBotjs
-I have a cat called Hades, and I've made this discord music bot 
+I have a cat called Hades, and I've made this discord music bot. 
 I made one, long time before but it was on 13 version and I didn't knew much about code, and this specific I'm gonna try update him all the time, to help people that are learning discordjs!
 
 # Requirements:

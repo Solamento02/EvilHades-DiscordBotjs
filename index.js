@@ -30,7 +30,7 @@ client.on('ready', () => {
 });
 
 client.on('ready', () => {
-    console.log(`HADES!Logado como ${client.user.tag}`);
+    console.log(`HADES!Bot connected as  ${client.user.tag}`);
 });
 
 client.on('messageCreate', async (msg) => {
@@ -47,6 +47,22 @@ client.on('messageCreate', async (msg) => {
 
 const player = new Player(client);
 
+player.on('connectionCreate', (queue) => {                                      // this command was made by Gabriel Tanner to fix a problem to play music on channel
+  queue.connection.voiceConnection.on('stateChange', (oldState, newState) => {
+    const oldNetworking = Reflect.get(oldState, 'networking');
+    const newNetworking = Reflect.get(newState, 'networking');
+
+    const networkStateChangeHandler = (oldNetworkState, newNetworkState) => {
+      const newUdp = Reflect.get(newNetworkState, 'udp');
+      clearInterval(newUdp?.keepAliveInterval);
+    }
+
+    oldNetworking?.off('stateChange', networkStateChangeHandler);
+    newNetworking?.on('stateChange', networkStateChangeHandler);
+  });
+});
+
+
 player.on('error', (queue, error) => {
     console.log(`[${queue.guild.name}] Error on queue😳 ${error.message}`);
   });
@@ -58,10 +74,23 @@ player.on('connectionError', (queue, error) => {
 player.on('trackStart', (queue, track) => {
     queue.metadata.send(`▶ | Started to play **${track.title}** 🎶 **${queue.connection.channel.name}**!`);
   });
-  
+
+player.on('trackAdd', (queue, track) => {
+  queue.metadata.send(`🎶 | Track **${track.title}** queued!`);
+});
+
 player.on('botDisconnect', queue => {
-    queue.metadata.send(' RAWWr! Fui desconectado do chat de voz..');
+    queue.metadata.send(' RAWWr! I was disconnected on voice chat...');
   });
+
+player.on('channelEmpty', queue => {
+  queue.metadata.send('Nobody is in the voice channel, leaving...');
+});
+
+player.on('queueEnd', queue => {
+  queue.metadata.send('Queue finished!');
+});
+
 
 client.on('messageCreate', async (msg) => {
     if (msg.content === '!deploy'){  // command deploy to use slash commands
